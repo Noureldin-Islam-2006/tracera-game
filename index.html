@@ -1,0 +1,949 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Can you catch a fake?</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, sans-serif;
+        background: #ffffff;
+        color: #1a1a1a;
+        line-height: 1.7;
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      button {
+        font-family: inherit;
+        border: none;
+        cursor: pointer;
+      }
+
+      button:disabled {
+        cursor: not-allowed;
+        opacity: 0.65;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+      }
+
+      .app {
+        max-width: 420px;
+        margin: 0 auto;
+        padding: 24px 18px 28px;
+        min-height: 100vh;
+      }
+
+      .screen {
+        display: none;
+      }
+
+      .screen.active {
+        display: block;
+      }
+
+      .brand {
+        font-size: 12px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: #6b6b6b;
+        margin-bottom: 8px;
+      }
+
+      h2 {
+        font-size: 28px;
+        font-weight: 500;
+        margin: 0 0 8px;
+      }
+
+      .subtitle {
+        margin: 0 0 6px;
+        color: #6b6b6b;
+        font-size: 14px;
+      }
+
+      .level-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin: 18px 0 14px;
+      }
+
+      .level-btn {
+        border-radius: 10px;
+        border: 0.5px solid rgba(0, 0, 0, 0.12);
+        background: #f5f5f3;
+        padding: 14px;
+        text-align: left;
+      }
+
+      .level-btn.full {
+        grid-column: span 2;
+      }
+
+      .level-btn.hard {
+        border: 2px solid #e24b4a;
+      }
+
+      .level-name {
+        font-size: 16px;
+        font-weight: 500;
+        margin-bottom: 4px;
+      }
+
+      .level-meta {
+        font-size: 12px;
+        color: #6b6b6b;
+      }
+
+      .fact-box {
+        border-left: 3px solid #7f77dd;
+        padding: 12px 14px;
+        background: #f5f5f3;
+        font-size: 13px;
+        color: #6b6b6b;
+        line-height: 1.6;
+      }
+
+      .footer {
+        margin-top: 18px;
+        font-size: 12px;
+        color: #6b6b6b;
+      }
+
+      .top-bar {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        margin-bottom: 10px;
+        font-size: 13px;
+      }
+
+      .level-badge {
+        justify-self: start;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-weight: 500;
+        font-size: 12px;
+      }
+
+      .badge-easy {
+        background: #eaf3de;
+        color: #27500a;
+      }
+
+      .badge-medium {
+        background: #faeeda;
+        color: #633806;
+      }
+
+      .badge-hard {
+        background: #fcebeb;
+        color: #791f1f;
+      }
+
+      .question-counter {
+        justify-self: center;
+        color: #6b6b6b;
+      }
+
+      .correct-counter {
+        justify-self: end;
+        color: #6b6b6b;
+      }
+
+      .timer-track {
+        width: 100%;
+        height: 10px;
+        border-radius: 6px;
+        border: 0.5px solid rgba(0, 0, 0, 0.12);
+        background: #f5f5f3;
+        overflow: hidden;
+        margin-bottom: 12px;
+      }
+
+      .timer-fill {
+        height: 100%;
+        width: 100%;
+        background: #639922;
+      }
+
+      .score-dots {
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        gap: 6px;
+        margin-bottom: 14px;
+      }
+
+      .dot {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        border: 0.5px solid rgba(0, 0, 0, 0.12);
+        background: #f5f5f3;
+      }
+
+      .dot-correct {
+        background: #eaf3de;
+        border-color: #639922;
+      }
+
+      .dot-wrong {
+        background: #fcebeb;
+        border-color: #e24b4a;
+      }
+
+      .card-wrapper {
+        position: relative;
+        margin-bottom: 10px;
+      }
+
+      .image-card {
+        position: relative;
+        height: 320px;
+        border-radius: 14px;
+        border: 0.5px solid rgba(0, 0, 0, 0.12);
+        background: #f5f5f3;
+        overflow: hidden;
+        touch-action: pan-y;
+        user-select: none;
+      }
+
+      .image-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .hint {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%) scale(1);
+        font-size: 20px;
+        font-weight: 500;
+        padding: 6px 12px;
+        border-radius: 8px;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .hint.fake {
+        left: 12px;
+        color: #e24b4a;
+        border: 2px solid #e24b4a;
+        background: #fcebeb;
+      }
+
+      .hint.real {
+        right: 12px;
+        color: #639922;
+        border: 2px solid #639922;
+        background: #eaf3de;
+      }
+
+      .answer-overlay {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 500;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s ease;
+        pointer-events: none;
+        padding: 18px;
+      }
+
+      .answer-overlay.show {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .overlay-correct {
+        background: rgba(99, 153, 34, 0.25);
+        color: #27500a;
+      }
+
+      .overlay-wrong {
+        background: rgba(226, 75, 74, 0.25);
+        color: #791f1f;
+      }
+
+      .instruction {
+        text-align: center;
+        color: #6b6b6b;
+        font-size: 13px;
+        margin: 8px 0 12px;
+      }
+
+      .action-buttons {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .action-button {
+        padding: 12px;
+        font-size: 14px;
+        font-weight: 500;
+        border-radius: 10px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        border: 2px solid transparent;
+      }
+
+      .action-button.fake {
+        background: #fcebeb;
+        border-color: #e24b4a;
+        color: #791f1f;
+      }
+
+      .action-button.real {
+        background: #eaf3de;
+        border-color: #639922;
+        color: #27500a;
+      }
+
+      .action-button.try {
+        background: #eeedfe;
+        border-color: #534ab7;
+        color: #3c3489;
+      }
+
+      .action-button.neutral {
+        background: #f5f5f3;
+        border: 0.5px solid rgba(0, 0, 0, 0.12);
+        color: #1a1a1a;
+      }
+
+      .results-header {
+        margin-bottom: 12px;
+      }
+
+      .metric-card {
+        border-radius: 10px;
+        border: 0.5px solid rgba(0, 0, 0, 0.12);
+        background: #f5f5f3;
+        padding: 16px;
+        text-align: center;
+        font-size: 28px;
+        font-weight: 500;
+        margin: 12px 0;
+      }
+
+      .verdict {
+        margin: 0 0 12px;
+        color: #6b6b6b;
+      }
+
+      .results-actions {
+        display: grid;
+        gap: 10px;
+        margin: 16px 0;
+      }
+
+      .fun-fact {
+        margin: 12px 0 6px;
+        font-size: 13px;
+        color: #6b6b6b;
+      }
+
+      @media (max-width: 380px) {
+        .image-card {
+          height: 280px;
+        }
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background: #1a1a1a;
+          color: #f0f0f0;
+        }
+
+        .subtitle,
+        .brand,
+        .level-meta,
+        .footer,
+        .question-counter,
+        .correct-counter,
+        .instruction,
+        .verdict,
+        .fun-fact {
+          color: #bdbdbd;
+        }
+
+        .level-btn,
+        .fact-box,
+        .timer-track,
+        .image-card,
+        .metric-card,
+        .action-button.neutral,
+        .dot {
+          background: #2a2a2a;
+          border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .action-button.neutral {
+          color: #f0f0f0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="sr-only">
+      Can you catch a fake? A deepfake detection game by Tracera, Cairo University
+    </h1>
+    <main class="app">
+      <section id="home" class="screen active">
+        <div class="brand">TRACERA - CAIRO UNIVERSITY</div>
+        <h2>Can you catch a fake?</h2>
+        <p class="subtitle">Swipe right for real, swipe left for fake.</p>
+        <p class="subtitle">Beat the hard level to win a prize.</p>
+        <div class="level-grid">
+          <button class="level-btn" data-level="easy" aria-label="Play easy level">
+            <div class="level-name">Easy</div>
+            <div class="level-meta">10 seconds per image, pass 5 of 10</div>
+          </button>
+          <button class="level-btn" data-level="medium" aria-label="Play medium level">
+            <div class="level-name">Medium</div>
+            <div class="level-meta">5 seconds per image, pass 7 of 10</div>
+          </button>
+          <button
+            class="level-btn full hard"
+            data-level="hard"
+            aria-label="Play hard level"
+          >
+            <div class="level-name">Hard</div>
+            <div class="level-meta">3 seconds per image, pass 8 of 10</div>
+          </button>
+        </div>
+        <div class="fact-box">
+          Our AI (GramNet) detects deepfakes with 93% accuracy by analysing the
+          mathematical fingerprint each generator leaves behind. Can you beat it?
+        </div>
+        <div class="footer">
+          Tracera Team - Cairo University - supervised by Prof. Dr. Samah Elshafiey
+        </div>
+      </section>
+
+      <section id="game" class="screen">
+        <div class="top-bar">
+          <span id="level-badge" class="level-badge badge-easy">Easy</span>
+          <span id="question-counter" class="question-counter">1 / 10</span>
+          <span id="correct-counter" class="correct-counter">0 correct</span>
+        </div>
+        <div class="timer-track">
+          <div
+            id="timer-fill"
+            class="timer-fill"
+            role="progressbar"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="100"
+          ></div>
+        </div>
+        <div id="score-dots" class="score-dots"></div>
+        <div class="card-wrapper">
+          <div id="image-card" class="image-card" aria-live="polite">
+            <img
+              id="face-image"
+              src=""
+              alt="Face image - decide if real or AI-generated"
+              draggable="false"
+            />
+            <div id="hint-fake" class="hint fake">FAKE</div>
+            <div id="hint-real" class="hint real">REAL</div>
+            <div id="answer-overlay" class="answer-overlay">
+              <span id="answer-text"></span>
+            </div>
+          </div>
+        </div>
+        <div class="instruction">Swipe or tap a button</div>
+        <div class="action-buttons">
+          <button
+            id="fake-button"
+            class="action-button fake"
+            aria-label="Answer fake"
+          >
+            <i class="ti ti-arrow-left" aria-hidden="true"></i>
+            Fake
+          </button>
+          <button
+            id="real-button"
+            class="action-button real"
+            aria-label="Answer real"
+          >
+            Real
+            <i class="ti ti-arrow-right" aria-hidden="true"></i>
+          </button>
+        </div>
+      </section>
+
+      <section id="results" class="screen">
+        <div class="results-header">
+          <h2 id="result-level">Easy level</h2>
+        </div>
+        <div id="result-score" class="metric-card">0 / 10</div>
+        <p id="result-verdict" class="verdict"></p>
+        <div id="result-dots" class="score-dots"></div>
+        <div id="fun-fact" class="fun-fact"></div>
+        <div class="results-actions">
+          <button
+            id="try-again"
+            class="action-button try"
+            aria-label="Try again"
+          >
+            Try again
+          </button>
+          <button
+            id="change-level"
+            class="action-button neutral"
+            aria-label="Change level"
+          >
+            Change level
+          </button>
+        </div>
+        <div class="fact-box">
+          GramNet analyses Gram matrix eigenvalue patterns invisible to the human
+          eye - it sees the mathematical ghost every AI generator leaves behind.
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const REAL_IMAGE_COUNT = 5000;
+      const FAKE_IMAGE_COUNT = 2630;
+      const HARD_REAL_EVERY = 19;
+      const HARD_FAKE_EVERY = 13;
+
+      function padNumber(value) {
+        return String(value).padStart(6, "0");
+      }
+
+      function buildImageList(folder, count, options) {
+        const list = [];
+        for (let i = 1; i <= count; i += 1) {
+          const padded = padNumber(i);
+          const isHard = options.hardEvery ? i % options.hardEvery === 0 : false;
+          const label = options.label
+            ? options.label
+            : i % 2 === 0
+              ? options.labelEven
+              : options.labelOdd;
+          list.push({
+            url: `${folder}/${padded}.jpg`,
+            label,
+            hard: isHard,
+          });
+        }
+        return list;
+      }
+
+      const REAL_IMAGES = buildImageList("images/real", REAL_IMAGE_COUNT, {
+        label: "Real photo",
+        hardEvery: HARD_REAL_EVERY,
+      });
+
+      const FAKE_IMAGES = buildImageList("images/fake", FAKE_IMAGE_COUNT, {
+        labelEven: "AI-generated (GAN)",
+        labelOdd: "AI-generated (Diffusion)",
+        hardEvery: HARD_FAKE_EVERY,
+      });
+
+      const LEVELS = {
+        easy: { name: "Easy", time: 10, pass: 5, badge: "badge-easy" },
+        medium: { name: "Medium", time: 5, pass: 7, badge: "badge-medium" },
+        hard: { name: "Hard", time: 3, pass: 8, badge: "badge-hard" },
+      };
+
+      const FUN_FACTS = [
+        "Diffusion models are 6.6 percentage points easier to detect than GANs - their training process leaves stronger mathematical anomalies.",
+        "The single most important detection feature GramNet uses is spectral slope - the rate at which energy decays across neural network layers.",
+        "GramNet was trained on 160,000 images spanning 26+ different AI generators including StyleGAN, DALL-E 3, Midjourney, and Stable Diffusion.",
+        "AI generators leave an invisible fingerprint in the second-moment statistics of neural network activations - GramNet reads this fingerprint.",
+        "GramNet's attribution head can tell GAN-generated from Diffusion-generated images with 96.35% accuracy - it knows not just that an image is fake, but what made it.",
+        "The human eye detects deepfakes at roughly 50-70% accuracy under pressure - barely better than a coin flip.",
+        "GramNet extracts a 2,382-dimensional mathematical feature vector from each image - then classifies it in milliseconds.",
+      ];
+
+      let currentLevel = "easy";
+      let queue = [];
+      let currentIdx = 0;
+      let correctCount = 0;
+      let results = [];
+      let timeLeft = 0;
+      let totalTime = 0;
+      let timerInterval = null;
+      let answered = false;
+      let advanceTimeout = null;
+      let dragActive = false;
+      let dragStartX = 0;
+      let dragCurrentX = 0;
+
+      const screens = {
+        home: document.getElementById("home"),
+        game: document.getElementById("game"),
+        results: document.getElementById("results"),
+      };
+
+      const levelBadge = document.getElementById("level-badge");
+      const questionCounter = document.getElementById("question-counter");
+      const correctCounter = document.getElementById("correct-counter");
+      const timerFill = document.getElementById("timer-fill");
+      const scoreDots = document.getElementById("score-dots");
+      const resultDots = document.getElementById("result-dots");
+      const imageCard = document.getElementById("image-card");
+      const faceImage = document.getElementById("face-image");
+      const answerOverlay = document.getElementById("answer-overlay");
+      const answerText = document.getElementById("answer-text");
+      const hintFake = document.getElementById("hint-fake");
+      const hintReal = document.getElementById("hint-real");
+      const resultLevel = document.getElementById("result-level");
+      const resultScore = document.getElementById("result-score");
+      const resultVerdict = document.getElementById("result-verdict");
+      const funFact = document.getElementById("fun-fact");
+
+      function setScreen(name) {
+        Object.keys(screens).forEach((key) => {
+          screens[key].classList.toggle("active", key === name);
+        });
+      }
+
+      function shuffle(list) {
+        const array = list.slice();
+        for (let i = array.length - 1; i > 0; i -= 1) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+      }
+
+      function pickWithHardPriority(items, count) {
+        const hardItems = items.filter((item) => item.hard);
+        const normalItems = items.filter((item) => !item.hard);
+        const picked = shuffle(hardItems).slice(0, count);
+        if (picked.length < count) {
+          picked.push(...shuffle(normalItems).slice(0, count - picked.length));
+        }
+        return picked;
+      }
+
+      function buildQueue(level) {
+        const realPick =
+          level === "hard"
+            ? pickWithHardPriority(REAL_IMAGES, 5)
+            : shuffle(REAL_IMAGES).slice(0, 5);
+        const fakePick =
+          level === "hard"
+            ? pickWithHardPriority(FAKE_IMAGES, 5)
+            : shuffle(FAKE_IMAGES).slice(0, 5);
+        const combined = [
+          ...realPick.map((item) => ({ ...item, real: true })),
+          ...fakePick.map((item) => ({ ...item, real: false })),
+        ];
+        return shuffle(combined);
+      }
+
+      function renderDots(target, data) {
+        target.innerHTML = "";
+        for (let i = 0; i < 10; i += 1) {
+          const dot = document.createElement("div");
+          dot.className = "dot";
+          if (data[i] === true) {
+            dot.classList.add("dot-correct");
+          } else if (data[i] === false) {
+            dot.classList.add("dot-wrong");
+          }
+          target.appendChild(dot);
+        }
+      }
+
+      function resetCardPosition() {
+        imageCard.style.transition = "none";
+        imageCard.style.transform = "translateX(0px) rotate(0deg)";
+        imageCard.style.opacity = "1";
+        hintFake.style.opacity = "0";
+        hintReal.style.opacity = "0";
+      }
+
+      function updateTimerBar() {
+        const percent = Math.max(0, (timeLeft / totalTime) * 100);
+        timerFill.style.width = `${percent}%`;
+        timerFill.setAttribute("aria-valuenow", Math.round(percent));
+        if (percent > 50) {
+          timerFill.style.background = "#639922";
+        } else if (percent > 25) {
+          timerFill.style.background = "#ba7517";
+        } else {
+          timerFill.style.background = "#e24b4a";
+        }
+      }
+
+      function clearTimer() {
+        if (timerInterval) {
+          clearInterval(timerInterval);
+          timerInterval = null;
+        }
+      }
+
+      function startTimer() {
+        clearTimer();
+        timeLeft = totalTime;
+        updateTimerBar();
+        timerInterval = setInterval(() => {
+          timeLeft = Math.max(0, Number((timeLeft - 0.1).toFixed(1)));
+          updateTimerBar();
+          if (timeLeft <= 0) {
+            clearTimer();
+            autoFail();
+          }
+        }, 100);
+      }
+
+      function showAnswerFeedback(isCorrect, item) {
+        answerOverlay.classList.remove("overlay-correct", "overlay-wrong");
+        answerOverlay.classList.add(isCorrect ? "overlay-correct" : "overlay-wrong");
+        answerText.textContent = isCorrect
+          ? `Correct! - ${item.label}`
+          : `Wrong - ${item.label}`;
+        answerOverlay.classList.add("show");
+      }
+
+      function animateCardOut(direction) {
+        const offset = direction > 0 ? 120 : -120;
+        const rotate = direction > 0 ? 15 : -15;
+        imageCard.style.transition = "transform 0.35s ease, opacity 0.35s ease";
+        imageCard.style.transform = `translateX(${offset}%) rotate(${rotate}deg)`;
+        imageCard.style.opacity = "0";
+      }
+
+      function answer(choice) {
+        if (answered || currentIdx >= queue.length) {
+          return;
+        }
+        answered = true;
+        clearTimer();
+        if (advanceTimeout) {
+          clearTimeout(advanceTimeout);
+          advanceTimeout = null;
+        }
+
+        const item = queue[currentIdx];
+        const isCorrect =
+          choice === "real" ? item.real : choice === "fake" ? !item.real : false;
+
+        results.push(isCorrect);
+        if (isCorrect) {
+          correctCount += 1;
+        }
+        correctCounter.textContent = `${correctCount} correct`;
+        renderDots(scoreDots, results);
+        showAnswerFeedback(isCorrect, item);
+
+        if (choice === "real") {
+          animateCardOut(1);
+        } else {
+          animateCardOut(-1);
+        }
+
+        advanceTimeout = setTimeout(() => {
+          currentIdx += 1;
+          showCard();
+        }, 850);
+      }
+
+      function autoFail() {
+        answer("timeout");
+      }
+
+      function showCard() {
+        if (currentIdx >= queue.length) {
+          endGame();
+          return;
+        }
+        answered = false;
+        answerOverlay.classList.remove("show", "overlay-correct", "overlay-wrong");
+        resetCardPosition();
+        const item = queue[currentIdx];
+        faceImage.src = item.url;
+        questionCounter.textContent = `${currentIdx + 1} / 10`;
+        correctCounter.textContent = `${correctCount} correct`;
+        renderDots(scoreDots, results);
+        startTimer();
+      }
+
+      function startGame(level) {
+        currentLevel = level;
+        queue = buildQueue(level);
+        currentIdx = 0;
+        correctCount = 0;
+        results = [];
+        totalTime = LEVELS[level].time;
+        answered = false;
+        if (advanceTimeout) {
+          clearTimeout(advanceTimeout);
+          advanceTimeout = null;
+        }
+        levelBadge.textContent = LEVELS[level].name;
+        levelBadge.className = `level-badge ${LEVELS[level].badge}`;
+        setScreen("game");
+        showCard();
+      }
+
+      function endGame() {
+        clearTimer();
+        if (advanceTimeout) {
+          clearTimeout(advanceTimeout);
+          advanceTimeout = null;
+        }
+        setScreen("results");
+        resultLevel.textContent = `${LEVELS[currentLevel].name} level`;
+        resultScore.textContent = `${correctCount} / 10`;
+        renderDots(resultDots, results);
+        const pass = correctCount >= LEVELS[currentLevel].pass;
+        if (currentLevel === "hard" && correctCount >= 8) {
+          resultVerdict.textContent = "You win a prize! Find a Tracera team member.";
+        } else if (pass) {
+          resultVerdict.textContent =
+            "You passed! Try the hard level to win a prize.";
+        } else {
+          resultVerdict.textContent =
+            "Didn't pass - GramNet does this with 93% accuracy!";
+        }
+        const randomFact = FUN_FACTS[Math.floor(Math.random() * FUN_FACTS.length)];
+        funFact.textContent = randomFact;
+      }
+
+      function showHome() {
+        clearTimer();
+        if (advanceTimeout) {
+          clearTimeout(advanceTimeout);
+          advanceTimeout = null;
+        }
+        setScreen("home");
+      }
+
+      function updateHints(deltaX) {
+        const opacity = Math.min(Math.abs(deltaX) / 80, 1);
+        if (deltaX < 0) {
+          hintFake.style.opacity = String(opacity);
+          hintReal.style.opacity = "0";
+        } else if (deltaX > 0) {
+          hintReal.style.opacity = String(opacity);
+          hintFake.style.opacity = "0";
+        } else {
+          hintFake.style.opacity = "0";
+          hintReal.style.opacity = "0";
+        }
+      }
+
+      function handleDragMove(deltaX) {
+        const rotation = deltaX * 0.05;
+        imageCard.style.transform = `translateX(${deltaX}px) rotate(${rotation}deg)`;
+        updateHints(deltaX);
+      }
+
+      function endDrag() {
+        dragActive = false;
+        if (answered) {
+          return;
+        }
+        const threshold = 70;
+        if (Math.abs(dragCurrentX) > threshold) {
+          answer(dragCurrentX > 0 ? "real" : "fake");
+        } else {
+          imageCard.style.transition = "transform 0.2s ease";
+          imageCard.style.transform = "translateX(0px) rotate(0deg)";
+          hintFake.style.opacity = "0";
+          hintReal.style.opacity = "0";
+        }
+      }
+
+      function setupDrag() {
+        imageCard.addEventListener("pointerdown", (event) => {
+          if (answered) {
+            return;
+          }
+          dragActive = true;
+          dragStartX = event.clientX;
+          dragCurrentX = 0;
+          imageCard.setPointerCapture(event.pointerId);
+          imageCard.style.transition = "none";
+        });
+
+        imageCard.addEventListener("pointermove", (event) => {
+          if (!dragActive || answered) {
+            return;
+          }
+          dragCurrentX = event.clientX - dragStartX;
+          handleDragMove(dragCurrentX);
+        });
+
+        imageCard.addEventListener("pointerup", () => {
+          if (!dragActive) {
+            return;
+          }
+          endDrag();
+        });
+
+        imageCard.addEventListener("pointercancel", () => {
+          if (!dragActive) {
+            return;
+          }
+          endDrag();
+        });
+      }
+
+      document.querySelectorAll("[data-level]").forEach((button) => {
+        button.addEventListener("click", () => {
+          startGame(button.dataset.level);
+        });
+      });
+
+      document.getElementById("fake-button").addEventListener("click", () => {
+        answer("fake");
+      });
+
+      document.getElementById("real-button").addEventListener("click", () => {
+        answer("real");
+      });
+
+      document.getElementById("try-again").addEventListener("click", () => {
+        startGame(currentLevel);
+      });
+
+      document.getElementById("change-level").addEventListener("click", () => {
+        showHome();
+      });
+
+      setupDrag();
+      showHome();
+    </script>
+  </body>
+</html>
