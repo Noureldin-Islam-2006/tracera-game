@@ -143,6 +143,29 @@
         color: var(--mid);
       }
 
+      .brand-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .logo-mark {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        padding: 4px;
+        display: grid;
+        place-items: center;
+      }
+
+      .logo-mark img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
       h2 {
         font-size: 28px;
         font-weight: 600;
@@ -175,6 +198,29 @@
         flex-wrap: wrap;
         gap: 8px;
         margin-top: 12px;
+      }
+
+      .robot-card {
+        margin: 14px 0 8px;
+        border-radius: 16px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        padding: 12px;
+        display: grid;
+        gap: 8px;
+      }
+
+      .robot-image {
+        width: 100%;
+        height: 190px;
+        object-fit: contain;
+        border-radius: 12px;
+        background: var(--surface-2);
+      }
+
+      .robot-caption {
+        font-size: 12px;
+        color: var(--mid);
       }
 
       .chip {
@@ -739,7 +785,7 @@
       const FEEDBACK_DELAYS = {
         easy: 800,
         medium: 700,
-        hard: 500,
+        hard: 400,
       };
 
       function shuffle(list) {
@@ -1027,9 +1073,8 @@
             const dx = (rect.width - drawWidth) / 2;
             const dy = (rect.height - drawHeight) / 2;
 
-            const fakeScale = isHard ? 0.06 : 0.1;
-            const realScale = isHard ? 0.2 : 1;
-            const pixelScale = item.real ? realScale : fakeScale;
+            const fakeScale = isHard ? 0.22 : 0.32;
+            const pixelScale = item.real ? 1 : fakeScale;
 
             if (pixelScale < 1) {
               const tempCanvas = document.createElement("canvas");
@@ -1047,9 +1092,7 @@
               ctx.drawImage(img, dx, dy, drawWidth, drawHeight);
             }
 
-            if (isHard) {
-              applyGrain(ctx, rect.width, rect.height);
-            }
+            // Only fake images get subtle pixelation; real images stay sharp.
           };
           img.src = item.url;
 
@@ -1297,7 +1340,12 @@
           <main className="app">
             <section className={`screen ${screen === "home" ? "active" : ""}`}>
               <div className="hero">
-                <div className="brand">TRACERA - CAIRO UNIVERSITY</div>
+                <div className="brand-row">
+                  <div className="logo-mark">
+                    <img src="images/logo11.png" alt="Tracera logo" />
+                  </div>
+                  <div className="brand">TRACERA - CAIRO UNIVERSITY</div>
+                </div>
                 <h2>Can you catch a fake?</h2>
                 <p className="subtitle">
                   Swipe right for real, swipe left for fake. Tap buttons if you
@@ -1316,6 +1364,17 @@
                     <i className="ti ti-clock" aria-hidden="true"></i>
                     Hard is 2s
                   </div>
+                </div>
+              </div>
+
+              <div className="robot-card">
+                <img
+                  className="robot-image"
+                  src="images/robo2t.png"
+                  alt="GramNet robot preview"
+                />
+                <div className="robot-caption">
+                  GramNet visual preview from the Tracera team.
                 </div>
               </div>
 
