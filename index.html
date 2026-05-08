@@ -16,21 +16,20 @@
     />
     <style>
       :root {
-        --bg: #f7f5f0;
-        --bg-2: #e9f1f5;
-        --surface: #ffffff;
-        --surface-2: #f1f3f6;
-        --text: #15181b;
-        --muted: #5f6872;
-        --border: rgba(0, 0, 0, 0.12);
-        --accent: #1e6f7a;
-        --accent-strong: #0b4f57;
-        --accent-warm: #f08a3c;
-        --green: #2f8f5b;
-        --green-soft: #e2f3ea;
-        --red: #d94a45;
-        --red-soft: #fde8e7;
-        --amber: #b6771c;
+        --base: #fffffa;
+        --deep: #0d5c63;
+        --mid: #247b7b;
+        --accent: #44a1a0;
+        --light: #78cdd7;
+        --surface: #f0fbfc;
+        --surface-2: #e6f5f6;
+        --text: #0d5c63;
+        --muted: #247b7b;
+        --border: rgba(13, 92, 99, 0.18);
+        --real: #44a1a0;
+        --real-soft: rgba(68, 161, 160, 0.18);
+        --fake: #0d5c63;
+        --fake-soft: rgba(13, 92, 99, 0.18);
       }
 
       * {
@@ -41,16 +40,16 @@
         margin: 0;
         font-family: "Space Grotesk", "IBM Plex Sans", "Segoe UI", sans-serif;
         background: radial-gradient(
-            circle at 15% 15%,
-            rgba(30, 111, 122, 0.14),
-            transparent 42%
+            circle at 15% 10%,
+            rgba(120, 205, 215, 0.35),
+            transparent 45%
           ),
           radial-gradient(
-            circle at 85% 5%,
-            rgba(240, 138, 60, 0.18),
-            transparent 36%
+            circle at 85% 0%,
+            rgba(68, 161, 160, 0.3),
+            transparent 38%
           ),
-          linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+          linear-gradient(180deg, var(--base) 0%, var(--surface) 100%);
         color: var(--text);
         line-height: 1.7;
       }
@@ -60,12 +59,16 @@
         position: fixed;
         inset: 0;
         background-image: linear-gradient(
-            rgba(10, 18, 28, 0.05) 1px,
+            rgba(13, 92, 99, 0.08) 1px,
             transparent 1px
           ),
-          linear-gradient(90deg, rgba(10, 18, 28, 0.05) 1px, transparent 1px);
-        background-size: 42px 42px;
-        opacity: 0.2;
+          linear-gradient(
+            90deg,
+            rgba(13, 92, 99, 0.08) 1px,
+            transparent 1px
+          );
+        background-size: 44px 44px;
+        opacity: 0.35;
         pointer-events: none;
         z-index: -1;
       }
@@ -137,7 +140,7 @@
         font-size: 12px;
         letter-spacing: 1.4px;
         text-transform: uppercase;
-        color: var(--muted);
+        color: var(--mid);
       }
 
       h2 {
@@ -154,7 +157,7 @@
 
       .subtitle {
         margin: 0 0 8px;
-        color: var(--muted);
+        color: var(--mid);
         font-size: 14px;
       }
 
@@ -162,8 +165,8 @@
         padding: 16px 16px 18px;
         border-radius: 18px;
         border: 1px solid var(--border);
-        background: var(--surface);
-        box-shadow: 0 18px 32px rgba(20, 30, 40, 0.08);
+        background: var(--surface-2);
+        box-shadow: 0 18px 32px rgba(13, 92, 99, 0.12);
         margin-bottom: 18px;
       }
 
@@ -180,9 +183,9 @@
         gap: 6px;
         padding: 6px 10px;
         border-radius: 999px;
-        background: var(--surface-2);
+        background: var(--surface);
         font-size: 12px;
-        color: var(--muted);
+        color: var(--mid);
         border: 1px solid var(--border);
       }
 
@@ -204,7 +207,7 @@
 
       .level-card:hover {
         transform: translateY(-2px);
-        border-color: rgba(30, 111, 122, 0.45);
+        border-color: rgba(13, 92, 99, 0.5);
       }
 
       .level-card.full {
@@ -212,8 +215,8 @@
       }
 
       .level-card.hard {
-        border: 2px solid var(--red);
-        background: #fff7f5;
+        border: 2px solid var(--deep);
+        background: #eaf6f7;
       }
 
       .level-name {
@@ -224,7 +227,7 @@
 
       .level-meta {
         font-size: 12px;
-        color: var(--muted);
+        color: var(--mid);
       }
 
       .fact-box {
@@ -232,14 +235,14 @@
         padding: 12px 14px;
         background: var(--surface);
         font-size: 13px;
-        color: var(--muted);
+        color: var(--mid);
         line-height: 1.6;
       }
 
       .footer {
         margin-top: 16px;
         font-size: 12px;
-        color: var(--muted);
+        color: var(--mid);
       }
 
       .top-bar {
@@ -257,21 +260,9 @@
         border-radius: 999px;
         font-weight: 600;
         font-size: 12px;
-      }
-
-      .badge-easy {
-        background: var(--green-soft);
-        color: var(--green);
-      }
-
-      .badge-medium {
-        background: #faeeda;
-        color: #633806;
-      }
-
-      .badge-hard {
-        background: var(--red-soft);
-        color: var(--red);
+        background: var(--surface-2);
+        color: var(--deep);
+        border: 1px solid var(--border);
       }
 
       .counter-block {
@@ -284,7 +275,7 @@
 
       .endless-banner {
         font-size: 11px;
-        color: var(--accent-strong);
+        color: var(--accent);
         margin-top: 2px;
       }
 
@@ -292,7 +283,7 @@
         justify-self: end;
         text-align: right;
         font-size: 12px;
-        color: var(--muted);
+        color: var(--mid);
       }
 
       .hidden {
@@ -312,7 +303,7 @@
       .timer-fill {
         height: 100%;
         width: 100%;
-        background: var(--green);
+        background: var(--real);
         transition: width 0.1s linear;
       }
 
@@ -332,13 +323,13 @@
       }
 
       .dot-correct {
-        background: var(--green-soft);
-        border-color: var(--green);
+        background: var(--real-soft);
+        border-color: var(--real);
       }
 
       .dot-wrong {
-        background: var(--red-soft);
-        border-color: var(--red);
+        background: var(--fake-soft);
+        border-color: var(--fake);
       }
 
       .card-wrapper {
@@ -355,13 +346,47 @@
         overflow: hidden;
         touch-action: pan-y;
         user-select: none;
-        box-shadow: 0 18px 30px rgba(20, 30, 40, 0.08);
+        box-shadow: 0 18px 30px rgba(13, 92, 99, 0.18);
       }
 
-      .image-card img {
+      .image-card.card-enter {
+        animation: cardEnter 0.45s ease both;
+      }
+
+      .image-card.hard-motion {
+        animation: cardEnter 0.45s ease both, slowPulse 5s ease-in-out infinite;
+      }
+
+      @keyframes cardEnter {
+        from {
+          opacity: 0;
+          transform: translateY(6px) scale(0.98);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      @keyframes slowPulse {
+        0% {
+          transform: scale(1);
+        }
+
+        50% {
+          transform: scale(1.015);
+        }
+
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .image-canvas {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        display: block;
       }
 
       .hint {
@@ -379,16 +404,16 @@
 
       .hint.fake {
         left: 12px;
-        color: var(--red);
-        border: 2px solid var(--red);
-        background: var(--red-soft);
+        color: var(--fake);
+        border: 2px solid var(--fake);
+        background: var(--fake-soft);
       }
 
       .hint.real {
         right: 12px;
-        color: var(--green);
-        border: 2px solid var(--green);
-        background: var(--green-soft);
+        color: var(--real);
+        border: 2px solid var(--real);
+        background: var(--real-soft);
       }
 
       .answer-overlay {
@@ -413,18 +438,18 @@
       }
 
       .overlay-correct {
-        background: rgba(47, 143, 91, 0.22);
-        color: #1f5938;
+        background: rgba(68, 161, 160, 0.25);
+        color: var(--deep);
       }
 
       .overlay-wrong {
-        background: rgba(217, 74, 69, 0.22);
-        color: #6e1f1b;
+        background: rgba(13, 92, 99, 0.25);
+        color: var(--deep);
       }
 
       .instruction {
         text-align: center;
-        color: var(--muted);
+        color: var(--mid);
         font-size: 13px;
         margin: 8px 0 12px;
       }
@@ -449,27 +474,27 @@
       }
 
       .action-button.fake {
-        background: var(--red-soft);
-        border-color: var(--red);
-        color: #6e1f1b;
+        background: var(--fake-soft);
+        border-color: var(--fake);
+        color: var(--fake);
       }
 
       .action-button.real {
-        background: var(--green-soft);
-        border-color: var(--green);
-        color: #1f5938;
+        background: var(--real-soft);
+        border-color: var(--real);
+        color: var(--deep);
       }
 
       .action-button.try {
-        background: #e8eef7;
+        background: var(--light);
         border-color: var(--accent);
-        color: var(--accent-strong);
+        color: var(--deep);
       }
 
       .action-button.neutral {
         background: var(--surface);
         border: 1px solid var(--border);
-        color: var(--text);
+        color: var(--deep);
       }
 
       .action-button.accent {
@@ -491,19 +516,19 @@
         font-size: 28px;
         font-weight: 600;
         margin: 12px 0 6px;
-        box-shadow: 0 16px 26px rgba(20, 30, 40, 0.08);
+        box-shadow: 0 16px 26px rgba(13, 92, 99, 0.18);
       }
 
       .metric-sub {
         text-align: center;
-        color: var(--muted);
+        color: var(--mid);
         font-size: 12px;
         margin-bottom: 12px;
       }
 
       .verdict {
         margin: 0 0 12px;
-        color: var(--muted);
+        color: var(--mid);
       }
 
       .results-actions {
@@ -515,7 +540,7 @@
       .fun-fact {
         margin: 12px 0 6px;
         font-size: 13px;
-        color: var(--muted);
+        color: var(--mid);
       }
 
       .leaderboard-card {
@@ -524,7 +549,7 @@
         background: var(--surface);
         padding: 14px;
         margin: 16px 0;
-        box-shadow: 0 16px 24px rgba(20, 30, 40, 0.08);
+        box-shadow: 0 16px 24px rgba(13, 92, 99, 0.18);
       }
 
       .leaderboard-header {
@@ -539,7 +564,7 @@
         padding: 4px 10px;
         border-radius: 999px;
         background: var(--surface-2);
-        color: var(--muted);
+        color: var(--deep);
       }
 
       .leaderboard-submit {
@@ -561,11 +586,12 @@
         border: 1px solid var(--border);
         background: var(--surface-2);
         font-size: 14px;
+        color: var(--deep);
       }
 
       .hint-text {
         font-size: 12px;
-        color: var(--muted);
+        color: var(--mid);
       }
 
       .leaderboard-table {
@@ -582,6 +608,7 @@
         border-radius: 10px;
         background: var(--surface-2);
         font-size: 13px;
+        color: var(--deep);
       }
 
       .leaderboard-row.header {
@@ -589,7 +616,7 @@
         font-size: 11px;
         text-transform: uppercase;
         letter-spacing: 1px;
-        color: var(--muted);
+        color: var(--mid);
       }
 
       @media (max-width: 380px) {
@@ -600,21 +627,24 @@
 
       @media (prefers-color-scheme: dark) {
         :root {
-          --bg: #14181a;
-          --bg-2: #1b2024;
-          --surface: #20262a;
-          --surface-2: #262e33;
-          --text: #f0f3f5;
-          --muted: #a8b1b9;
-          --border: rgba(255, 255, 255, 0.12);
+          --base: #0c1719;
+          --surface: #122226;
+          --surface-2: #142b31;
+          --text: #e8f6f7;
+          --muted: #9fc9cf;
+          --border: rgba(120, 205, 215, 0.2);
         }
 
         body::before {
           background-image: linear-gradient(
-              rgba(255, 255, 255, 0.06) 1px,
+              rgba(120, 205, 215, 0.08) 1px,
               transparent 1px
             ),
-            linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+            linear-gradient(
+              90deg,
+              rgba(120, 205, 215, 0.08) 1px,
+              transparent 1px
+            );
         }
 
         .hero,
@@ -628,7 +658,7 @@
         }
 
         input[type="text"] {
-          background: #1b2125;
+          background: #0c1d22;
           color: var(--text);
         }
       }
@@ -638,191 +668,12 @@
     <h1 class="sr-only">
       Can you catch a fake? A deepfake detection game by Tracera, Cairo University
     </h1>
-    <main class="app">
-      <section id="home" class="screen active">
-        <div class="hero">
-          <div class="brand">TRACERA - CAIRO UNIVERSITY</div>
-          <h2>Can you catch a fake?</h2>
-          <p class="subtitle">
-            Swipe right for real, swipe left for fake. Tap buttons if you prefer.
-          </p>
-          <div class="hero-chips">
-            <div class="chip"><i class="ti ti-arrow-right" aria-hidden="true"></i>Real is right</div>
-            <div class="chip"><i class="ti ti-arrow-left" aria-hidden="true"></i>Fake is left</div>
-            <div class="chip"><i class="ti ti-clock" aria-hidden="true"></i>Hard is 2s</div>
-          </div>
-        </div>
+    <div id="root"></div>
 
-        <div class="level-grid">
-          <button class="level-card" data-level="easy" aria-label="Play easy level">
-            <div class="level-name">Easy</div>
-            <div class="level-meta">10 seconds per image - pass 5 of 10.</div>
-          </button>
-          <button
-            class="level-card"
-            data-level="medium"
-            aria-label="Play medium level"
-          >
-            <div class="level-name">Medium</div>
-            <div class="level-meta">5 seconds per image - pass 7 of 10.</div>
-          </button>
-          <button
-            class="level-card full hard"
-            data-level="hard"
-            aria-label="Play hard endless level"
-          >
-            <div class="level-name">Hard - endless</div>
-            <div class="level-meta">
-              2 seconds per image - reach 9 of 10 to unlock endless. Game ends on
-              2 total mistakes.
-            </div>
-          </button>
-        </div>
-
-        <div class="fact-box">
-          Our AI (GramNet) detects deepfakes with 93% accuracy by analyzing the
-          mathematical fingerprint each generator leaves behind. Can you beat it?
-        </div>
-        <div class="footer">
-          Tracera Team - Cairo University - supervised by Prof. Dr. Samah
-          Elshafiey
-        </div>
-      </section>
-
-      <section id="game" class="screen">
-        <div class="top-bar">
-          <span id="level-badge" class="level-badge badge-easy">Easy</span>
-          <div class="counter-block">
-            <div id="question-counter" class="question-counter">1 / 10</div>
-            <div id="endless-banner" class="endless-banner hidden">
-              Endless mode unlocked
-            </div>
-          </div>
-          <div class="score-block">
-            <div id="correct-counter">0 correct</div>
-            <div id="mistake-counter" class="hidden">0 mistakes</div>
-          </div>
-        </div>
-        <div class="timer-track">
-          <div
-            id="timer-fill"
-            class="timer-fill"
-            role="progressbar"
-            aria-valuemin="0"
-            aria-valuemax="100"
-            aria-valuenow="100"
-          ></div>
-        </div>
-        <div id="score-dots" class="score-dots"></div>
-        <div class="card-wrapper">
-          <div id="image-card" class="image-card" aria-live="polite">
-            <img
-              id="face-image"
-              src=""
-              alt="Face image - decide if real or AI-generated"
-              draggable="false"
-            />
-            <div id="hint-fake" class="hint fake">FAKE</div>
-            <div id="hint-real" class="hint real">REAL</div>
-            <div id="answer-overlay" class="answer-overlay">
-              <span id="answer-text"></span>
-            </div>
-          </div>
-        </div>
-        <div class="instruction">Swipe or tap a button</div>
-        <div class="action-buttons">
-          <button
-            id="fake-button"
-            class="action-button fake"
-            aria-label="Answer fake"
-          >
-            <i class="ti ti-arrow-left" aria-hidden="true"></i>
-            Fake
-          </button>
-          <button
-            id="real-button"
-            class="action-button real"
-            aria-label="Answer real"
-          >
-            Real
-            <i class="ti ti-arrow-right" aria-hidden="true"></i>
-          </button>
-        </div>
-      </section>
-
-      <section id="results" class="screen">
-        <div class="results-header">
-          <h2 id="result-level">Easy level</h2>
-        </div>
-        <div id="result-score" class="metric-card">0 / 10</div>
-        <div id="result-sub" class="metric-sub"></div>
-        <p id="result-verdict" class="verdict"></p>
-        <div id="result-dots" class="score-dots"></div>
-        <div id="fun-fact" class="fun-fact"></div>
-
-        <div class="leaderboard-card">
-          <div class="leaderboard-header">
-            <h3>Leaderboard</h3>
-            <span id="leaderboard-level" class="level-pill">Easy</span>
-          </div>
-          <div class="leaderboard-submit">
-            <label class="sr-only" for="player-name">Your name</label>
-            <div class="input-row">
-              <input
-                id="player-name"
-                type="text"
-                maxlength="18"
-                placeholder="Your name"
-                aria-label="Player name"
-              />
-              <button
-                id="submit-score"
-                class="action-button accent"
-                aria-label="Submit score"
-              >
-                Submit
-              </button>
-            </div>
-            <div id="submit-status" class="hint-text"></div>
-            <div id="leaderboard-disabled" class="hint-text hidden">
-              Leaderboard not configured yet.
-            </div>
-          </div>
-          <div class="leaderboard-table">
-            <div class="leaderboard-row header">
-              <span>#</span>
-              <span>Name</span>
-              <span>Score</span>
-            </div>
-            <div id="leaderboard-list"></div>
-          </div>
-          <div id="leaderboard-empty" class="hint-text"></div>
-        </div>
-
-        <div class="results-actions">
-          <button
-            id="try-again"
-            class="action-button try"
-            aria-label="Try again"
-          >
-            Try again
-          </button>
-          <button
-            id="change-level"
-            class="action-button neutral"
-            aria-label="Change level"
-          >
-            Change level
-          </button>
-        </div>
-        <div class="fact-box">
-          GramNet analyzes Gram matrix eigenvalue patterns invisible to the human
-          eye - it sees the mathematical ghost every AI generator leaves behind.
-        </div>
-      </section>
-    </main>
-
-    <script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
       const LEADERBOARD_ENDPOINT =
         "https://script.google.com/macros/s/AKfycbxWajgu84zDiO8QsD1IkNOkOz6B-6paXztUwgs-WFlULbMWh9cAbKoXi6ECiJQal3on/exec";
       const LEADERBOARD_LIMIT = 10;
@@ -870,9 +721,9 @@
       });
 
       const LEVELS = {
-        easy: { name: "Easy", time: 10, pass: 5, badge: "badge-easy" },
-        medium: { name: "Medium", time: 5, pass: 7, badge: "badge-medium" },
-        hard: { name: "Hard", time: 2, pass: HARD_UNLOCK_SCORE, badge: "badge-hard" },
+        easy: { name: "Easy", time: 10, pass: 5 },
+        medium: { name: "Medium", time: 5, pass: 7 },
+        hard: { name: "Hard", time: 2, pass: HARD_UNLOCK_SCORE },
       };
 
       const FUN_FACTS = [
@@ -885,64 +736,11 @@
         "GramNet extracts a 2,382-dimensional mathematical feature vector from each image - then classifies it in milliseconds.",
       ];
 
-      let currentLevel = "easy";
-      let queue = [];
-      let currentIdx = 0;
-      let correctCount = 0;
-      let results = [];
-      let timeLeft = 0;
-      let totalTime = 0;
-      let timerInterval = null;
-      let answered = false;
-      let advanceTimeout = null;
-      let dragActive = false;
-      let dragStartX = 0;
-      let dragCurrentX = 0;
-      let mistakeCount = 0;
-      let totalAnswered = 0;
-      let endlessUnlocked = false;
-      let hardWon = false;
-      let gameEndReason = "";
-      let submittedScore = false;
-
-      const screens = {
-        home: document.getElementById("home"),
-        game: document.getElementById("game"),
-        results: document.getElementById("results"),
+      const FEEDBACK_DELAYS = {
+        easy: 800,
+        medium: 700,
+        hard: 500,
       };
-
-      const levelBadge = document.getElementById("level-badge");
-      const questionCounter = document.getElementById("question-counter");
-      const correctCounter = document.getElementById("correct-counter");
-      const mistakeCounter = document.getElementById("mistake-counter");
-      const endlessBanner = document.getElementById("endless-banner");
-      const timerFill = document.getElementById("timer-fill");
-      const scoreDots = document.getElementById("score-dots");
-      const resultDots = document.getElementById("result-dots");
-      const imageCard = document.getElementById("image-card");
-      const faceImage = document.getElementById("face-image");
-      const answerOverlay = document.getElementById("answer-overlay");
-      const answerText = document.getElementById("answer-text");
-      const hintFake = document.getElementById("hint-fake");
-      const hintReal = document.getElementById("hint-real");
-      const resultLevel = document.getElementById("result-level");
-      const resultScore = document.getElementById("result-score");
-      const resultSub = document.getElementById("result-sub");
-      const resultVerdict = document.getElementById("result-verdict");
-      const funFact = document.getElementById("fun-fact");
-      const leaderboardLevel = document.getElementById("leaderboard-level");
-      const leaderboardList = document.getElementById("leaderboard-list");
-      const leaderboardEmpty = document.getElementById("leaderboard-empty");
-      const leaderboardDisabled = document.getElementById("leaderboard-disabled");
-      const playerNameInput = document.getElementById("player-name");
-      const submitScoreButton = document.getElementById("submit-score");
-      const submitStatus = document.getElementById("submit-status");
-
-      function setScreen(name) {
-        Object.keys(screens).forEach((key) => {
-          screens[key].classList.toggle("active", key === name);
-        });
-      }
 
       function shuffle(list) {
         const array = list.slice();
@@ -981,476 +779,802 @@
         return shuffle(combined);
       }
 
-      function ensureEndlessBuffer() {
-        if (currentLevel !== "hard" || !endlessUnlocked) {
-          return;
-        }
-        if (queue.length - currentIdx < 6) {
-          queue.push(...buildQueue("hard", HARD_BASE_ROUND));
-        }
-      }
+      function App() {
+        const [screen, setScreen] = React.useState("home");
+        const [currentLevel, setCurrentLevel] = React.useState("easy");
+        const [queue, setQueue] = React.useState([]);
+        const [currentIdx, setCurrentIdx] = React.useState(0);
+        const [correctCount, setCorrectCount] = React.useState(0);
+        const [results, setResults] = React.useState([]);
+        const [mistakes, setMistakes] = React.useState(0);
+        const [totalAnswered, setTotalAnswered] = React.useState(0);
+        const [endlessUnlocked, setEndlessUnlocked] = React.useState(false);
+        const [hardWon, setHardWon] = React.useState(false);
+        const [gameEndReason, setGameEndReason] = React.useState("");
+        const [overlay, setOverlay] = React.useState({
+          show: false,
+          correct: false,
+          text: "",
+        });
+        const [funFact, setFunFact] = React.useState("");
+        const [leaderboard, setLeaderboard] = React.useState([]);
+        const [leaderboardStatus, setLeaderboardStatus] = React.useState("");
+        const [submitStatus, setSubmitStatus] = React.useState("");
+        const [playerName, setPlayerName] = React.useState("");
+        const [submitted, setSubmitted] = React.useState(false);
 
-      function renderDots(target, data) {
-        target.innerHTML = "";
-        for (let i = 0; i < HARD_BASE_ROUND; i += 1) {
-          const dot = document.createElement("div");
-          dot.className = "dot";
-          if (data[i] === true) {
-            dot.classList.add("dot-correct");
-          } else if (data[i] === false) {
-            dot.classList.add("dot-wrong");
+        const timerRef = React.useRef(null);
+        const timeLeftRef = React.useRef(0);
+        const totalTimeRef = React.useRef(LEVELS.easy.time);
+        const answeredRef = React.useRef(false);
+        const advanceRef = React.useRef(null);
+        const cardRef = React.useRef(null);
+        const canvasRef = React.useRef(null);
+        const timerFillRef = React.useRef(null);
+        const hintFakeRef = React.useRef(null);
+        const hintRealRef = React.useRef(null);
+        const dragRef = React.useRef({ active: false, startX: 0, currentX: 0 });
+        const flipRef = React.useRef(false);
+
+        const isHard = currentLevel === "hard";
+        const showDots = !isHard || currentIdx < HARD_BASE_ROUND;
+        const showHints = !isHard;
+
+        const leaderboardEnabled = LEADERBOARD_ENDPOINT.trim().length > 0;
+
+        function resetCardPosition() {
+          if (!cardRef.current) {
+            return;
           }
-          target.appendChild(dot);
+          cardRef.current.style.transition = "none";
+          cardRef.current.style.transform = "translateX(0px) rotate(0deg)";
+          cardRef.current.style.opacity = "1";
+          if (hintFakeRef.current) {
+            hintFakeRef.current.style.opacity = "0";
+          }
+          if (hintRealRef.current) {
+            hintRealRef.current.style.opacity = "0";
+          }
         }
-      }
 
-      function resetCardPosition() {
-        imageCard.style.transition = "none";
-        imageCard.style.transform = "translateX(0px) rotate(0deg)";
-        imageCard.style.opacity = "1";
-        hintFake.style.opacity = "0";
-        hintReal.style.opacity = "0";
-      }
-
-      function updateTimerBar() {
-        const percent = Math.max(0, (timeLeft / totalTime) * 100);
-        timerFill.style.width = `${percent}%`;
-        timerFill.setAttribute("aria-valuenow", Math.round(percent));
-        if (percent > 50) {
-          timerFill.style.background = "var(--green)";
-        } else if (percent > 25) {
-          timerFill.style.background = "var(--amber)";
-        } else {
-          timerFill.style.background = "var(--red)";
+        function updateTimerBar(percent) {
+          const clamped = Math.max(0, Math.min(100, percent));
+          if (!timerFillRef.current) {
+            return;
+          }
+          timerFillRef.current.style.width = `${clamped}%`;
+          timerFillRef.current.setAttribute("aria-valuenow", Math.round(clamped));
+          if (clamped > 50) {
+            timerFillRef.current.style.background = "var(--real)";
+          } else if (clamped > 25) {
+            timerFillRef.current.style.background = "var(--accent)";
+          } else {
+            timerFillRef.current.style.background = "var(--deep)";
+          }
         }
-      }
 
-      function clearTimer() {
-        if (timerInterval) {
-          clearInterval(timerInterval);
-          timerInterval = null;
+        function clearTimer() {
+          if (timerRef.current) {
+            clearInterval(timerRef.current);
+            timerRef.current = null;
+          }
         }
-      }
 
-      function startTimer() {
-        clearTimer();
-        timeLeft = totalTime;
-        updateTimerBar();
-        timerInterval = setInterval(() => {
-          timeLeft = Math.max(0, Number((timeLeft - 0.1).toFixed(1)));
-          updateTimerBar();
-          if (timeLeft <= 0) {
+        function startTimer() {
+          clearTimer();
+          timeLeftRef.current = totalTimeRef.current;
+          updateTimerBar(100);
+          timerRef.current = setInterval(() => {
+            timeLeftRef.current = Math.max(
+              0,
+              Number((timeLeftRef.current - 0.1).toFixed(1))
+            );
+            const percent =
+              (timeLeftRef.current / totalTimeRef.current) * 100;
+            updateTimerBar(percent);
+            if (timeLeftRef.current <= 0) {
+              clearTimer();
+              autoFail();
+            }
+          }, 100);
+        }
+
+        function animateCardOut(direction) {
+          if (!cardRef.current) {
+            return;
+          }
+          const offset = direction > 0 ? 120 : -120;
+          const rotate = direction > 0 ? 15 : -15;
+          cardRef.current.style.transition =
+            "transform 0.35s ease, opacity 0.35s ease";
+          cardRef.current.style.transform =
+            `translateX(${offset}%) rotate(${rotate}deg)`;
+          cardRef.current.style.opacity = "0";
+        }
+
+        function updateHints(deltaX) {
+          if (!showHints) {
+            return;
+          }
+          const opacity = Math.min(Math.abs(deltaX) / 80, 1);
+          if (deltaX < 0) {
+            if (hintFakeRef.current) {
+              hintFakeRef.current.style.opacity = String(opacity);
+            }
+            if (hintRealRef.current) {
+              hintRealRef.current.style.opacity = "0";
+            }
+          } else if (deltaX > 0) {
+            if (hintRealRef.current) {
+              hintRealRef.current.style.opacity = String(opacity);
+            }
+            if (hintFakeRef.current) {
+              hintFakeRef.current.style.opacity = "0";
+            }
+          } else {
+            if (hintFakeRef.current) {
+              hintFakeRef.current.style.opacity = "0";
+            }
+            if (hintRealRef.current) {
+              hintRealRef.current.style.opacity = "0";
+            }
+          }
+        }
+
+        function handleDragMove(deltaX) {
+          if (!cardRef.current) {
+            return;
+          }
+          const rotation = deltaX * 0.05;
+          cardRef.current.style.transform =
+            `translateX(${deltaX}px) rotate(${rotation}deg)`;
+          updateHints(deltaX);
+        }
+
+        function endDrag() {
+          dragRef.current.active = false;
+          if (answeredRef.current) {
+            return;
+          }
+          const threshold = 70;
+          if (Math.abs(dragRef.current.currentX) > threshold) {
+            answer(dragRef.current.currentX > 0 ? "real" : "fake");
+          } else {
+            if (!cardRef.current) {
+              return;
+            }
+            cardRef.current.style.transition = "transform 0.2s ease";
+            cardRef.current.style.transform = "translateX(0px) rotate(0deg)";
+            updateHints(0);
+          }
+        }
+
+        function handlePointerDown(event) {
+          if (answeredRef.current) {
+            return;
+          }
+          dragRef.current.active = true;
+          dragRef.current.startX = event.clientX;
+          dragRef.current.currentX = 0;
+          if (cardRef.current) {
+            cardRef.current.setPointerCapture(event.pointerId);
+            cardRef.current.style.transition = "none";
+          }
+        }
+
+        function handlePointerMove(event) {
+          if (!dragRef.current.active || answeredRef.current) {
+            return;
+          }
+          dragRef.current.currentX = event.clientX - dragRef.current.startX;
+          handleDragMove(dragRef.current.currentX);
+        }
+
+        function handlePointerUp() {
+          if (!dragRef.current.active) {
+            return;
+          }
+          endDrag();
+        }
+
+        function handlePointerCancel() {
+          if (!dragRef.current.active) {
+            return;
+          }
+          endDrag();
+        }
+
+        function applyGrain(ctx, width, height) {
+          ctx.save();
+          ctx.globalAlpha = 0.08;
+          ctx.fillStyle = "#0d5c63";
+          for (let i = 0; i < 240; i += 1) {
+            const x = Math.random() * width;
+            const y = Math.random() * height;
+            const size = Math.random() * 1.6 + 0.4;
+            ctx.fillRect(x, y, size, size);
+          }
+          ctx.restore();
+        }
+
+        function drawImageToCanvas(item) {
+          const canvas = canvasRef.current;
+          const card = cardRef.current;
+          if (!canvas || !card) {
+            return;
+          }
+          const rect = card.getBoundingClientRect();
+          if (rect.width === 0 || rect.height === 0) {
+            return;
+          }
+          const ratio = window.devicePixelRatio || 1;
+          canvas.width = rect.width * ratio;
+          canvas.height = rect.height * ratio;
+          canvas.style.width = `${rect.width}px`;
+          canvas.style.height = `${rect.height}px`;
+          const ctx = canvas.getContext("2d");
+          ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+          ctx.clearRect(0, 0, rect.width, rect.height);
+
+          const img = new Image();
+          img.onload = () => {
+            const scale = Math.max(
+              rect.width / img.width,
+              rect.height / img.height
+            );
+            const drawWidth = img.width * scale;
+            const drawHeight = img.height * scale;
+            const dx = (rect.width - drawWidth) / 2;
+            const dy = (rect.height - drawHeight) / 2;
+
+            const fakeScale = isHard ? 0.06 : 0.1;
+            const realScale = isHard ? 0.2 : 1;
+            const pixelScale = item.real ? realScale : fakeScale;
+
+            if (pixelScale < 1) {
+              const tempCanvas = document.createElement("canvas");
+              const tctx = tempCanvas.getContext("2d");
+              const pw = Math.max(1, Math.floor(drawWidth * pixelScale));
+              const ph = Math.max(1, Math.floor(drawHeight * pixelScale));
+              tempCanvas.width = pw;
+              tempCanvas.height = ph;
+              tctx.imageSmoothingEnabled = false;
+              tctx.drawImage(img, 0, 0, pw, ph);
+              ctx.imageSmoothingEnabled = false;
+              ctx.drawImage(tempCanvas, 0, 0, pw, ph, dx, dy, drawWidth, drawHeight);
+            } else {
+              ctx.imageSmoothingEnabled = true;
+              ctx.drawImage(img, dx, dy, drawWidth, drawHeight);
+            }
+
+            if (isHard) {
+              applyGrain(ctx, rect.width, rect.height);
+            }
+          };
+          img.src = item.url;
+
+          canvas.style.transform = flipRef.current ? "scaleX(-1)" : "scaleX(1)";
+        }
+
+        function ensureEndlessBuffer() {
+          if (!isHard || !endlessUnlocked) {
+            return;
+          }
+          setQueue((prev) => {
+            if (prev.length - currentIdx < 6) {
+              return prev.concat(buildQueue("hard", HARD_BASE_ROUND));
+            }
+            return prev;
+          });
+        }
+
+        function startGame(level) {
+          setCurrentLevel(level);
+          setQueue(buildQueue(level, HARD_BASE_ROUND));
+          setCurrentIdx(0);
+          setCorrectCount(0);
+          setResults([]);
+          setMistakes(0);
+          setTotalAnswered(0);
+          setEndlessUnlocked(false);
+          setHardWon(false);
+          setGameEndReason("");
+          setOverlay({ show: false, correct: false, text: "" });
+          setPlayerName("");
+          setSubmitted(false);
+          setSubmitStatus("");
+          totalTimeRef.current = LEVELS[level].time;
+          setScreen("game");
+        }
+
+        function endGame() {
+          clearTimer();
+          if (advanceRef.current) {
+            clearTimeout(advanceRef.current);
+            advanceRef.current = null;
+          }
+          setScreen("results");
+          const randomFact = FUN_FACTS[Math.floor(Math.random() * FUN_FACTS.length)];
+          setFunFact(randomFact);
+        }
+
+        function answer(choice) {
+          if (answeredRef.current || currentIdx >= queue.length) {
+            return;
+          }
+          answeredRef.current = true;
+          clearTimer();
+          if (advanceRef.current) {
+            clearTimeout(advanceRef.current);
+            advanceRef.current = null;
+          }
+
+          const item = queue[currentIdx];
+          const isCorrect =
+            choice === "real" ? item.real : choice === "fake" ? !item.real : false;
+
+          setTotalAnswered((prev) => prev + 1);
+          setCorrectCount((prev) => (isCorrect ? prev + 1 : prev));
+          setMistakes((prev) => (isCorrect ? prev : prev + 1));
+
+          if (showDots) {
+            setResults((prev) => prev.concat(isCorrect));
+          }
+
+          const overlayText = isCorrect
+            ? `Correct! - ${item.label}`
+            : `Wrong - ${item.label}`;
+          setOverlay({ show: true, correct: isCorrect, text: overlayText });
+
+          animateCardOut(choice === "real" ? 1 : -1);
+
+          const isLastBase = isHard && currentIdx === HARD_BASE_ROUND - 1;
+
+          let nextCorrect = correctCount + (isCorrect ? 1 : 0);
+          let nextMistakes = mistakes + (isCorrect ? 0 : 1);
+
+          if (isLastBase && nextCorrect >= HARD_UNLOCK_SCORE) {
+            setEndlessUnlocked(true);
+            setHardWon(true);
+          }
+
+          let shouldEnd = false;
+          let reason = "";
+          if (isHard) {
+            if (nextMistakes >= HARD_MAX_MISTAKES) {
+              shouldEnd = true;
+              reason = "mistakes";
+            }
+            if (isLastBase && nextCorrect < HARD_UNLOCK_SCORE) {
+              shouldEnd = true;
+              reason = "gate";
+            }
+          } else if (currentIdx >= HARD_BASE_ROUND - 1) {
+            shouldEnd = true;
+            reason = "complete";
+          }
+
+          advanceRef.current = setTimeout(() => {
+            if (shouldEnd) {
+              setGameEndReason(reason);
+              endGame();
+            } else {
+              setCurrentIdx((prev) => prev + 1);
+            }
+          }, FEEDBACK_DELAYS[currentLevel]);
+        }
+
+        function autoFail() {
+          answer("timeout");
+        }
+
+        async function submitScore() {
+          if (!leaderboardEnabled) {
+            setSubmitStatus("Leaderboard endpoint is missing.");
+            return;
+          }
+          if (submitted) {
+            setSubmitStatus("Score already submitted.");
+            return;
+          }
+          const trimmed = playerName.trim();
+          if (trimmed.length < 2) {
+            setSubmitStatus("Please enter at least 2 characters.");
+            return;
+          }
+
+          setSubmitStatus("Submitting score...");
+          const payload = {
+            name: trimmed,
+            level: currentLevel,
+            score: correctCount,
+            correct: correctCount,
+            mistakes,
+            totalAnswered,
+            won: hardWon || !isHard,
+            timestamp: new Date().toISOString(),
+          };
+
+          try {
+            const response = await fetch(LEADERBOARD_ENDPOINT, {
+              method: "POST",
+              headers: {
+                "Content-Type": "text/plain;charset=utf-8",
+              },
+              body: JSON.stringify(payload),
+            });
+            if (!response.ok) {
+              throw new Error("Submit failed");
+            }
+            setSubmitted(true);
+            setSubmitStatus("Score submitted.");
+            await loadLeaderboard(currentLevel);
+          } catch (error) {
+            setSubmitStatus("Could not submit score.");
+          }
+        }
+
+        async function loadLeaderboard(level) {
+          if (!leaderboardEnabled) {
+            setLeaderboardStatus("Add an endpoint to enable scores.");
+            setLeaderboard([]);
+            return;
+          }
+          setLeaderboardStatus("Loading leaderboard...");
+          setLeaderboard([]);
+          try {
+            const response = await fetch(
+              `${LEADERBOARD_ENDPOINT}?level=${encodeURIComponent(level)}&limit=${LEADERBOARD_LIMIT}`,
+              { cache: "no-store" }
+            );
+            if (!response.ok) {
+              throw new Error("Fetch failed");
+            }
+            const data = await response.json();
+            if (!Array.isArray(data) || data.length === 0) {
+              setLeaderboardStatus("No scores yet.");
+              setLeaderboard([]);
+              return;
+            }
+            setLeaderboardStatus("");
+            setLeaderboard(data.slice(0, LEADERBOARD_LIMIT));
+          } catch (error) {
+            setLeaderboardStatus("Could not load leaderboard.");
+            setLeaderboard([]);
+          }
+        }
+
+        React.useEffect(() => {
+          if (screen !== "game") {
             clearTimer();
-            autoFail();
+            return;
           }
-        }, 100);
-      }
-
-      function showAnswerFeedback(isCorrect, item) {
-        answerOverlay.classList.remove("overlay-correct", "overlay-wrong");
-        answerOverlay.classList.add(isCorrect ? "overlay-correct" : "overlay-wrong");
-        answerText.textContent = isCorrect
-          ? `Correct! - ${item.label}`
-          : `Wrong - ${item.label}`;
-        answerOverlay.classList.add("show");
-      }
-
-      function animateCardOut(direction) {
-        const offset = direction > 0 ? 120 : -120;
-        const rotate = direction > 0 ? 15 : -15;
-        imageCard.style.transition = "transform 0.35s ease, opacity 0.35s ease";
-        imageCard.style.transform = `translateX(${offset}%) rotate(${rotate}deg)`;
-        imageCard.style.opacity = "0";
-      }
-
-      function updateTopBar() {
-        levelBadge.textContent = LEVELS[currentLevel].name;
-        levelBadge.className = `level-badge ${LEVELS[currentLevel].badge}`;
-        correctCounter.textContent = `${correctCount} correct`;
-        if (currentLevel === "hard") {
-          mistakeCounter.textContent = `${mistakeCount} mistakes`;
-          mistakeCounter.classList.remove("hidden");
-          if (endlessUnlocked) {
-            questionCounter.textContent = `Endless: ${totalAnswered} answered`;
-            endlessBanner.classList.remove("hidden");
-          } else {
-            questionCounter.textContent = `${currentIdx + 1} / ${HARD_BASE_ROUND}`;
-            endlessBanner.classList.add("hidden");
-          }
-        } else {
-          questionCounter.textContent = `${currentIdx + 1} / ${HARD_BASE_ROUND}`;
-          mistakeCounter.classList.add("hidden");
-          endlessBanner.classList.add("hidden");
-        }
-      }
-
-      function shouldRenderDots() {
-        return currentLevel !== "hard" || currentIdx < HARD_BASE_ROUND;
-      }
-
-      function showCard() {
-        ensureEndlessBuffer();
-        if (currentIdx >= queue.length) {
-          endGame();
-          return;
-        }
-        answered = false;
-        answerOverlay.classList.remove("show", "overlay-correct", "overlay-wrong");
-        resetCardPosition();
-        const item = queue[currentIdx];
-        faceImage.src = item.url;
-        updateTopBar();
-        if (shouldRenderDots()) {
-          renderDots(scoreDots, results);
-        }
-        startTimer();
-      }
-
-      function startGame(level) {
-        currentLevel = level;
-        queue = buildQueue(level, HARD_BASE_ROUND);
-        currentIdx = 0;
-        correctCount = 0;
-        results = [];
-        timeLeft = 0;
-        totalTime = LEVELS[level].time;
-        answered = false;
-        mistakeCount = 0;
-        totalAnswered = 0;
-        endlessUnlocked = false;
-        hardWon = false;
-        gameEndReason = "";
-        submittedScore = false;
-        submitStatus.textContent = "";
-        playerNameInput.value = "";
-        if (advanceTimeout) {
-          clearTimeout(advanceTimeout);
-          advanceTimeout = null;
-        }
-        setScreen("game");
-        showCard();
-      }
-
-      function answer(choice) {
-        if (answered || currentIdx >= queue.length) {
-          return;
-        }
-        answered = true;
-        clearTimer();
-        if (advanceTimeout) {
-          clearTimeout(advanceTimeout);
-          advanceTimeout = null;
-        }
-
-        const item = queue[currentIdx];
-        const isCorrect =
-          choice === "real" ? item.real : choice === "fake" ? !item.real : false;
-
-        totalAnswered += 1;
-        if (isCorrect) {
-          correctCount += 1;
-        } else {
-          mistakeCount += 1;
-        }
-
-        if (shouldRenderDots()) {
-          results.push(isCorrect);
-        }
-
-        showAnswerFeedback(isCorrect, item);
-        animateCardOut(choice === "real" ? 1 : -1);
-
-        const isLastBase =
-          currentLevel === "hard" && currentIdx === HARD_BASE_ROUND - 1;
-        if (isLastBase && correctCount >= HARD_UNLOCK_SCORE) {
-          endlessUnlocked = true;
-          hardWon = true;
-        }
-
-        let shouldEnd = false;
-        if (currentLevel === "hard") {
-          if (mistakeCount >= HARD_MAX_MISTAKES) {
-            shouldEnd = true;
-            gameEndReason = "mistakes";
-          }
-          if (isLastBase && correctCount < HARD_UNLOCK_SCORE) {
-            shouldEnd = true;
-            gameEndReason = "gate";
-          }
-        } else if (currentIdx >= HARD_BASE_ROUND - 1) {
-          shouldEnd = true;
-          gameEndReason = "complete";
-        }
-
-        advanceTimeout = setTimeout(() => {
-          currentIdx += 1;
-          if (shouldEnd) {
+          if (currentIdx >= queue.length) {
             endGame();
-          } else {
-            showCard();
+            return;
           }
-        }, 850);
-      }
+          answeredRef.current = false;
+          setOverlay({ show: false, correct: false, text: "" });
+          resetCardPosition();
+          flipRef.current = isHard ? Math.random() < 0.5 : false;
+          const item = queue[currentIdx];
+          drawImageToCanvas(item);
+          startTimer();
+        }, [screen, currentIdx, queue, currentLevel]);
 
-      function autoFail() {
-        answer("timeout");
-      }
+        React.useEffect(() => {
+          ensureEndlessBuffer();
+        }, [currentIdx, endlessUnlocked, currentLevel]);
 
-      function endGame() {
-        clearTimer();
-        if (advanceTimeout) {
-          clearTimeout(advanceTimeout);
-          advanceTimeout = null;
-        }
-        setScreen("results");
-        resultLevel.textContent = `${LEVELS[currentLevel].name} level`;
-        renderDots(resultDots, results);
-
-        if (currentLevel === "hard") {
-          resultScore.textContent = `${correctCount} correct`;
-          resultSub.textContent = `Mistakes: ${mistakeCount} of 1 allowed`;
-          if (gameEndReason === "gate") {
-            resultVerdict.textContent =
-              "You did not reach 9 of 10, so endless mode stayed locked.";
-          } else if (hardWon) {
-            resultVerdict.textContent =
-              "Winner unlocked. Find a Tracera team member for your prize.";
-          } else {
-            resultVerdict.textContent = "Hard run ended.";
+        React.useEffect(() => {
+          if (screen === "results") {
+            loadLeaderboard(currentLevel);
           }
-        } else {
-          resultScore.textContent = `${correctCount} / 10`;
-          resultSub.textContent = "";
-          const pass = correctCount >= LEVELS[currentLevel].pass;
-          resultVerdict.textContent = pass
+        }, [screen, currentLevel]);
+
+        React.useEffect(() => {
+          function handleResize() {
+            if (screen === "game" && queue[currentIdx]) {
+              drawImageToCanvas(queue[currentIdx]);
+            }
+          }
+          window.addEventListener("resize", handleResize);
+          return () => window.removeEventListener("resize", handleResize);
+        }, [screen, queue, currentIdx, currentLevel]);
+
+        const pass = correctCount >= LEVELS[currentLevel].pass;
+        const verdictText = isHard
+          ? gameEndReason === "gate"
+            ? "You did not reach 9 of 10, so endless mode stayed locked."
+            : hardWon
+              ? "Winner unlocked. Find a Tracera team member for your prize."
+              : "Hard run ended."
+          : pass
             ? "You passed. Try hard to unlock endless mode."
             : "Did not pass - GramNet does this with 93% accuracy.";
-        }
 
-        const randomFact = FUN_FACTS[Math.floor(Math.random() * FUN_FACTS.length)];
-        funFact.textContent = randomFact;
-        leaderboardLevel.textContent = LEVELS[currentLevel].name;
-        setupLeaderboard();
+        return (
+          <main className="app">
+            <section className={`screen ${screen === "home" ? "active" : ""}`}>
+              <div className="hero">
+                <div className="brand">TRACERA - CAIRO UNIVERSITY</div>
+                <h2>Can you catch a fake?</h2>
+                <p className="subtitle">
+                  Swipe right for real, swipe left for fake. Tap buttons if you
+                  prefer.
+                </p>
+                <div className="hero-chips">
+                  <div className="chip">
+                    <i className="ti ti-arrow-right" aria-hidden="true"></i>
+                    Real is right
+                  </div>
+                  <div className="chip">
+                    <i className="ti ti-arrow-left" aria-hidden="true"></i>
+                    Fake is left
+                  </div>
+                  <div className="chip">
+                    <i className="ti ti-clock" aria-hidden="true"></i>
+                    Hard is 2s
+                  </div>
+                </div>
+              </div>
+
+              <div className="level-grid">
+                <button
+                  className="level-card"
+                  data-level="easy"
+                  aria-label="Play easy level"
+                  onClick={() => startGame("easy")}
+                >
+                  <div className="level-name">Easy</div>
+                  <div className="level-meta">
+                    10 seconds per image - pass 5 of 10.
+                  </div>
+                </button>
+                <button
+                  className="level-card"
+                  data-level="medium"
+                  aria-label="Play medium level"
+                  onClick={() => startGame("medium")}
+                >
+                  <div className="level-name">Medium</div>
+                  <div className="level-meta">
+                    5 seconds per image - pass 7 of 10.
+                  </div>
+                </button>
+                <button
+                  className="level-card full hard"
+                  data-level="hard"
+                  aria-label="Play hard endless level"
+                  onClick={() => startGame("hard")}
+                >
+                  <div className="level-name">Hard - endless</div>
+                  <div className="level-meta">
+                    2 seconds per image - reach 9 of 10 to unlock endless. Game
+                    ends on 2 total mistakes.
+                  </div>
+                </button>
+              </div>
+
+              <div className="fact-box">
+                Our AI (GramNet) detects deepfakes with 93% accuracy by analyzing
+                the mathematical fingerprint each generator leaves behind. Can
+                you beat it?
+              </div>
+              <div className="footer">
+                Tracera Team - Cairo University - supervised by Prof. Dr. Samah
+                Elshafiey
+              </div>
+            </section>
+
+            <section className={`screen ${screen === "game" ? "active" : ""}`}>
+              <div className="top-bar">
+                <span className="level-badge">{LEVELS[currentLevel].name}</span>
+                <div className="counter-block">
+                  <div className="question-counter">
+                    {isHard && endlessUnlocked
+                      ? `Endless: ${totalAnswered} answered`
+                      : `${currentIdx + 1} / ${HARD_BASE_ROUND}`}
+                  </div>
+                  {isHard && endlessUnlocked ? (
+                    <div className="endless-banner">Endless mode unlocked</div>
+                  ) : null}
+                </div>
+                <div className="score-block">
+                  <div>{correctCount} correct</div>
+                  {isHard ? <div>{mistakes} mistakes</div> : null}
+                </div>
+              </div>
+              <div className="timer-track">
+                <div
+                  ref={timerFillRef}
+                  className="timer-fill"
+                  role="progressbar"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-valuenow="100"
+                ></div>
+              </div>
+              {showDots ? (
+                <div className="score-dots">
+                  {Array.from({ length: HARD_BASE_ROUND }).map((_, index) => {
+                    const status = results[index];
+                    const classes = ["dot"];
+                    if (status === true) {
+                      classes.push("dot-correct");
+                    }
+                    if (status === false) {
+                      classes.push("dot-wrong");
+                    }
+                    return <div key={index} className={classes.join(" ")}></div>;
+                  })}
+                </div>
+              ) : null}
+              <div className="card-wrapper">
+                <div
+                  ref={cardRef}
+                  className={`image-card ${isHard ? "hard-motion" : ""}`}
+                  aria-live="polite"
+                  onPointerDown={handlePointerDown}
+                  onPointerMove={handlePointerMove}
+                  onPointerUp={handlePointerUp}
+                  onPointerCancel={handlePointerCancel}
+                >
+                  <canvas
+                    ref={canvasRef}
+                    className="image-canvas"
+                    role="img"
+                    aria-label="Face image - decide if real or AI-generated"
+                  ></canvas>
+                  <div ref={hintFakeRef} className="hint fake">
+                    FAKE
+                  </div>
+                  <div ref={hintRealRef} className="hint real">
+                    REAL
+                  </div>
+                  <div
+                    className={
+                      `answer-overlay ${overlay.show ? "show" : ""} ` +
+                      (overlay.correct ? "overlay-correct" : "overlay-wrong")
+                    }
+                  >
+                    <span>{overlay.text}</span>
+                  </div>
+                </div>
+              </div>
+              <div className="instruction">Swipe or tap a button</div>
+              <div className="action-buttons">
+                <button
+                  className="action-button fake"
+                  aria-label="Answer fake"
+                  onClick={() => answer("fake")}
+                >
+                  <i className="ti ti-arrow-left" aria-hidden="true"></i>
+                  Fake
+                </button>
+                <button
+                  className="action-button real"
+                  aria-label="Answer real"
+                  onClick={() => answer("real")}
+                >
+                  Real
+                  <i className="ti ti-arrow-right" aria-hidden="true"></i>
+                </button>
+              </div>
+            </section>
+
+            <section className={`screen ${screen === "results" ? "active" : ""}`}>
+              <div className="results-header">
+                <h2>{LEVELS[currentLevel].name} level</h2>
+              </div>
+              <div className="metric-card">
+                {isHard ? `${correctCount} correct` : `${correctCount} / 10`}
+              </div>
+              <div className="metric-sub">
+                {isHard
+                  ? `Mistakes: ${mistakes} of 1 allowed · Total answered: ${totalAnswered}`
+                  : ""}
+              </div>
+              <p className="verdict">{verdictText}</p>
+              <div className="score-dots">
+                {Array.from({ length: HARD_BASE_ROUND }).map((_, index) => {
+                  const status = results[index];
+                  const classes = ["dot"];
+                  if (status === true) {
+                    classes.push("dot-correct");
+                  }
+                  if (status === false) {
+                    classes.push("dot-wrong");
+                  }
+                  return <div key={index} className={classes.join(" ")}></div>;
+                })}
+              </div>
+              <div className="fun-fact">{funFact}</div>
+
+              <div className="leaderboard-card">
+                <div className="leaderboard-header">
+                  <h3>Leaderboard</h3>
+                  <span className="level-pill">{LEVELS[currentLevel].name}</span>
+                </div>
+                <div className="leaderboard-submit">
+                  <label className="sr-only" htmlFor="player-name">
+                    Your name
+                  </label>
+                  <div className="input-row">
+                    <input
+                      id="player-name"
+                      type="text"
+                      maxLength="18"
+                      placeholder="Your name"
+                      aria-label="Player name"
+                      value={playerName}
+                      onChange={(event) => setPlayerName(event.target.value)}
+                      onKeyDown={(event) => {
+                        if (event.key === "Enter") {
+                          submitScore();
+                        }
+                      }}
+                    />
+                    <button
+                      className="action-button accent"
+                      aria-label="Submit score"
+                      onClick={submitScore}
+                      disabled={!leaderboardEnabled}
+                    >
+                      Submit
+                    </button>
+                  </div>
+                  <div className="hint-text">{submitStatus}</div>
+                </div>
+                <div className="leaderboard-table">
+                  <div className="leaderboard-row header">
+                    <span>#</span>
+                    <span>Name</span>
+                    <span>Score</span>
+                  </div>
+                  {leaderboard.length === 0 ? (
+                    <div className="hint-text">{leaderboardStatus}</div>
+                  ) : (
+                    leaderboard.map((entry, index) => (
+                      <div key={index} className="leaderboard-row">
+                        <span>{index + 1}</span>
+                        <span>{entry.name || "Player"}</span>
+                        <span>{entry.score ?? "-"}</span>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+
+              <div className="results-actions">
+                <button
+                  className="action-button try"
+                  aria-label="Try again"
+                  onClick={() => startGame(currentLevel)}
+                >
+                  Try again
+                </button>
+                <button
+                  className="action-button neutral"
+                  aria-label="Change level"
+                  onClick={() => {
+                    setScreen("home");
+                  }}
+                >
+                  Change level
+                </button>
+              </div>
+              <div className="fact-box">
+                GramNet analyzes Gram matrix eigenvalue patterns invisible to the
+                human eye - it sees the mathematical ghost every AI generator
+                leaves behind.
+              </div>
+            </section>
+          </main>
+        );
       }
 
-      function showHome() {
-        clearTimer();
-        if (advanceTimeout) {
-          clearTimeout(advanceTimeout);
-          advanceTimeout = null;
-        }
-        setScreen("home");
-      }
-
-      function updateHints(deltaX) {
-        const opacity = Math.min(Math.abs(deltaX) / 80, 1);
-        if (deltaX < 0) {
-          hintFake.style.opacity = String(opacity);
-          hintReal.style.opacity = "0";
-        } else if (deltaX > 0) {
-          hintReal.style.opacity = String(opacity);
-          hintFake.style.opacity = "0";
-        } else {
-          hintFake.style.opacity = "0";
-          hintReal.style.opacity = "0";
-        }
-      }
-
-      function handleDragMove(deltaX) {
-        const rotation = deltaX * 0.05;
-        imageCard.style.transform = `translateX(${deltaX}px) rotate(${rotation}deg)`;
-        updateHints(deltaX);
-      }
-
-      function endDrag() {
-        dragActive = false;
-        if (answered) {
-          return;
-        }
-        const threshold = 70;
-        if (Math.abs(dragCurrentX) > threshold) {
-          answer(dragCurrentX > 0 ? "real" : "fake");
-        } else {
-          imageCard.style.transition = "transform 0.2s ease";
-          imageCard.style.transform = "translateX(0px) rotate(0deg)";
-          hintFake.style.opacity = "0";
-          hintReal.style.opacity = "0";
-        }
-      }
-
-      function setupDrag() {
-        imageCard.addEventListener("pointerdown", (event) => {
-          if (answered) {
-            return;
-          }
-          dragActive = true;
-          dragStartX = event.clientX;
-          dragCurrentX = 0;
-          imageCard.setPointerCapture(event.pointerId);
-          imageCard.style.transition = "none";
-        });
-
-        imageCard.addEventListener("pointermove", (event) => {
-          if (!dragActive || answered) {
-            return;
-          }
-          dragCurrentX = event.clientX - dragStartX;
-          handleDragMove(dragCurrentX);
-        });
-
-        imageCard.addEventListener("pointerup", () => {
-          if (!dragActive) {
-            return;
-          }
-          endDrag();
-        });
-
-        imageCard.addEventListener("pointercancel", () => {
-          if (!dragActive) {
-            return;
-          }
-          endDrag();
-        });
-      }
-
-      function leaderboardEnabled() {
-        return LEADERBOARD_ENDPOINT.trim().length > 0;
-      }
-
-      function getScoreValue() {
-        return correctCount;
-      }
-
-      function setupLeaderboard() {
-        leaderboardList.innerHTML = "";
-        leaderboardEmpty.textContent = "";
-        submitStatus.textContent = "";
-        submitScoreButton.disabled = false;
-        leaderboardDisabled.classList.toggle("hidden", leaderboardEnabled());
-        if (leaderboardEnabled()) {
-          loadLeaderboard(currentLevel);
-        } else {
-          leaderboardEmpty.textContent = "Add an endpoint to enable scores.";
-        }
-      }
-
-      async function submitScore() {
-        if (!leaderboardEnabled()) {
-          submitStatus.textContent = "Leaderboard endpoint is missing.";
-          return;
-        }
-        if (submittedScore) {
-          submitStatus.textContent = "Score already submitted.";
-          return;
-        }
-        const name = playerNameInput.value.trim();
-        if (name.length < 2) {
-          submitStatus.textContent = "Please enter at least 2 characters.";
-          return;
-        }
-        submitScoreButton.disabled = true;
-        submitStatus.textContent = "Submitting score...";
-        const payload = {
-          name,
-          level: currentLevel,
-          score: getScoreValue(),
-          correct: correctCount,
-          mistakes: mistakeCount,
-          totalAnswered,
-          won: hardWon || currentLevel !== "hard",
-          timestamp: new Date().toISOString(),
-        };
-
-        try {
-          const response = await fetch(LEADERBOARD_ENDPOINT, {
-            method: "POST",
-            headers: {
-              "Content-Type": "text/plain;charset=utf-8",
-            },
-            body: JSON.stringify(payload),
-          });
-          if (!response.ok) {
-            throw new Error("Submit failed");
-          }
-          submittedScore = true;
-          submitStatus.textContent = "Score submitted.";
-          loadLeaderboard(currentLevel);
-        } catch (error) {
-          submitStatus.textContent = "Could not submit score.";
-        } finally {
-          submitScoreButton.disabled = false;
-        }
-      }
-
-      async function loadLeaderboard(level) {
-        if (!leaderboardEnabled()) {
-          return;
-        }
-        leaderboardList.innerHTML = "";
-        leaderboardEmpty.textContent = "Loading leaderboard...";
-        try {
-          const response = await fetch(
-            `${LEADERBOARD_ENDPOINT}?level=${encodeURIComponent(level)}&limit=${LEADERBOARD_LIMIT}`,
-            { cache: "no-store" }
-          );
-          if (!response.ok) {
-            throw new Error("Fetch failed");
-          }
-          const data = await response.json();
-          leaderboardEmpty.textContent = "";
-          if (!Array.isArray(data) || data.length === 0) {
-            leaderboardEmpty.textContent = "No scores yet.";
-            return;
-          }
-          data.slice(0, LEADERBOARD_LIMIT).forEach((entry, index) => {
-            const row = document.createElement("div");
-            row.className = "leaderboard-row";
-            row.innerHTML = `
-              <span>${index + 1}</span>
-              <span>${entry.name || "Player"}</span>
-              <span>${entry.score ?? "-"}</span>
-            `;
-            leaderboardList.appendChild(row);
-          });
-        } catch (error) {
-          leaderboardEmpty.textContent = "Could not load leaderboard.";
-        }
-      }
-
-      document.querySelectorAll("[data-level]").forEach((button) => {
-        button.addEventListener("click", () => {
-          startGame(button.dataset.level);
-        });
-      });
-
-      document.getElementById("fake-button").addEventListener("click", () => {
-        answer("fake");
-      });
-
-      document.getElementById("real-button").addEventListener("click", () => {
-        answer("real");
-      });
-
-      document.getElementById("try-again").addEventListener("click", () => {
-        startGame(currentLevel);
-      });
-
-      document.getElementById("change-level").addEventListener("click", () => {
-        showHome();
-      });
-
-      submitScoreButton.addEventListener("click", () => {
-        submitScore();
-      });
-
-      playerNameInput.addEventListener("keydown", (event) => {
-        if (event.key === "Enter") {
-          submitScore();
-        }
-      });
-
-      setupDrag();
-      showHome();
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
     </script>
   </body>
 </html>
