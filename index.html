@@ -1448,6 +1448,30 @@
         }, [screen, currentIdx, queue, currentLevel]);
 
         React.useEffect(() => {
+          if (screen !== "game") {
+            return undefined;
+          }
+
+          function handleKeyDown(event) {
+            const target = event.target;
+            if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA")) {
+              return;
+            }
+            if (event.key === "ArrowLeft") {
+              event.preventDefault();
+              answer("fake");
+            }
+            if (event.key === "ArrowRight") {
+              event.preventDefault();
+              answer("real");
+            }
+          }
+
+          window.addEventListener("keydown", handleKeyDown);
+          return () => window.removeEventListener("keydown", handleKeyDown);
+        }, [screen, currentIdx, queue, currentLevel]);
+
+        React.useEffect(() => {
           ensureEndlessBuffer();
         }, [currentIdx, endlessUnlocked, currentLevel]);
 
