@@ -961,6 +961,7 @@
         const hintRealRef = React.useRef(null);
         const dragRef = React.useRef({ active: false, startX: 0, currentX: 0 });
         const flipRef = React.useRef(false);
+        const imageLoadIdRef = React.useRef(0);
 
         const isHard = currentLevel === "hard";
         const showDots = !isHard || currentIdx < HARD_BASE_ROUND;
@@ -1143,7 +1144,7 @@
           ctx.restore();
         }
 
-        function drawImageToCanvas(item) {
+        function drawImageToCanvas(item, onLoaded) {
           const canvas = canvasRef.current;
           const card = cardRef.current;
           if (!canvas || !card) {
@@ -1220,6 +1221,14 @@
             }
 
             // Only fake images get subtle pixelation; real images stay sharp.
+            if (typeof onLoaded === "function") {
+              onLoaded();
+            }
+          };
+          img.onerror = () => {
+            if (typeof onLoaded === "function") {
+              onLoaded();
+            }
           };
           img.src = item.url;
 
@@ -1428,8 +1437,14 @@
           resetCardPosition();
           flipRef.current = isHard ? Math.random() < 0.5 : false;
           const item = queue[currentIdx];
-          drawImageToCanvas(item);
-          startTimer();
+          imageLoadIdRef.current += 1;
+          const loadId = imageLoadIdRef.current;
+          drawImageToCanvas(item, () => {
+            if (imageLoadIdRef.current !== loadId) {
+              return;
+            }
+            startTimer();
+          });
         }, [screen, currentIdx, queue, currentLevel]);
 
         React.useEffect(() => {
