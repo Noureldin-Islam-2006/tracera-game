@@ -200,6 +200,11 @@
         margin-top: 12px;
       }
 
+      .chip--real {
+        color: #52cfc9;
+        text-shadow: 0 0 10px rgba(68, 161, 160, 0.55);
+      }
+
       .robot-card {
         margin: 14px 0 8px;
         border-radius: 16px;
@@ -208,6 +213,12 @@
         padding: 12px;
         display: grid;
         gap: 8px;
+      }
+
+      .robot-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--deep);
       }
 
       .robot-image {
@@ -269,6 +280,11 @@
         font-size: 16px;
         font-weight: 600;
         margin-bottom: 4px;
+      }
+
+      .level-name-light {
+        color: #fffffa;
+        text-shadow: 0 1px 6px rgba(13, 92, 99, 0.45);
       }
 
       .level-meta {
@@ -457,7 +473,8 @@
 
       .hint.real {
         right: 12px;
-        color: var(--real);
+        color: #52cfc9;
+        text-shadow: 0 0 12px rgba(68, 161, 160, 0.6);
         border: 2px solid var(--real);
         background: var(--real-soft);
       }
@@ -528,7 +545,8 @@
       .action-button.real {
         background: var(--real-soft);
         border-color: var(--real);
-        color: var(--deep);
+        color: #52cfc9;
+        text-shadow: 0 0 12px rgba(68, 161, 160, 0.6);
       }
 
       .action-button.try {
@@ -1073,7 +1091,7 @@
             const dx = (rect.width - drawWidth) / 2;
             const dy = (rect.height - drawHeight) / 2;
 
-            const fakeScale = isHard ? 0.22 : 0.32;
+            const fakeScale = isHard ? 0.45 : 0.55;
             const pixelScale = item.real ? 1 : fakeScale;
 
             if (pixelScale < 1) {
@@ -1086,7 +1104,34 @@
               tctx.imageSmoothingEnabled = false;
               tctx.drawImage(img, 0, 0, pw, ph);
               ctx.imageSmoothingEnabled = false;
-              ctx.drawImage(tempCanvas, 0, 0, pw, ph, dx, dy, drawWidth, drawHeight);
+              if (!item.real) {
+                ctx.save();
+                ctx.filter = isHard ? "blur(0.8px)" : "blur(0.6px)";
+                ctx.drawImage(
+                  tempCanvas,
+                  0,
+                  0,
+                  pw,
+                  ph,
+                  dx,
+                  dy,
+                  drawWidth,
+                  drawHeight
+                );
+                ctx.restore();
+              } else {
+                ctx.drawImage(
+                  tempCanvas,
+                  0,
+                  0,
+                  pw,
+                  ph,
+                  dx,
+                  dy,
+                  drawWidth,
+                  drawHeight
+                );
+              }
             } else {
               ctx.imageSmoothingEnabled = true;
               ctx.drawImage(img, dx, dy, drawWidth, drawHeight);
@@ -1354,7 +1399,7 @@
                 <div className="hero-chips">
                   <div className="chip">
                     <i className="ti ti-arrow-right" aria-hidden="true"></i>
-                    Real is right
+                    <span className="chip--real">Real is right</span>
                   </div>
                   <div className="chip">
                     <i className="ti ti-arrow-left" aria-hidden="true"></i>
@@ -1368,13 +1413,15 @@
               </div>
 
               <div className="robot-card">
+                <div className="robot-title">Meet the model guide</div>
                 <img
                   className="robot-image"
                   src="images/robo2t.png"
                   alt="GramNet robot preview"
                 />
                 <div className="robot-caption">
-                  GramNet visual preview from the Tracera team.
+                  Our robot character represents GramNet's mathematical engine.
+                  Beat its accuracy to claim the top spot.
                 </div>
               </div>
 
@@ -1385,7 +1432,7 @@
                   aria-label="Play easy level"
                   onClick={() => startGame("easy")}
                 >
-                  <div className="level-name">Easy</div>
+                  <div className="level-name level-name-light">Easy</div>
                   <div className="level-meta">
                     10 seconds per image - pass 5 of 10.
                   </div>
@@ -1396,7 +1443,7 @@
                   aria-label="Play medium level"
                   onClick={() => startGame("medium")}
                 >
-                  <div className="level-name">Medium</div>
+                  <div className="level-name level-name-light">Medium</div>
                   <div className="level-meta">
                     5 seconds per image - pass 7 of 10.
                   </div>
