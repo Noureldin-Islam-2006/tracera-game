@@ -160,8 +160,8 @@
       }
 
       .brand-logo {
-        width: 42px;
-        height: 42px;
+        width: 36px;
+        height: 36px;
         padding: 0;
         border-radius: 0;
         background: transparent;
@@ -606,6 +606,12 @@
         color: #ffffff;
       }
 
+      .action-button.small {
+        padding: 8px 12px;
+        font-size: 12px;
+        border-radius: 999px;
+      }
+
       .results-header {
         margin-bottom: 8px;
       }
@@ -700,6 +706,25 @@
       .leaderboard-table {
         display: grid;
         gap: 6px;
+      }
+
+      .leaderboard-toggle {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .level-toggle {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-bottom: 8px;
+      }
+
+      .level-pill.active {
+        background: rgba(68, 161, 160, 0.25);
+        color: #52cfc9;
+        border: 1px solid rgba(82, 207, 201, 0.65);
       }
 
       .leaderboard-row {
@@ -921,6 +946,8 @@
         const [submitStatus, setSubmitStatus] = React.useState("");
         const [playerName, setPlayerName] = React.useState("");
         const [submitted, setSubmitted] = React.useState(false);
+        const [homeLeaderboardOpen, setHomeLeaderboardOpen] = React.useState(false);
+        const [homeLeaderboardLevel, setHomeLeaderboardLevel] = React.useState("easy");
 
         const timerRef = React.useRef(null);
         const timeLeftRef = React.useRef(0);
@@ -1416,6 +1443,12 @@
         }, [screen, currentLevel]);
 
         React.useEffect(() => {
+          if (screen === "home" && homeLeaderboardOpen) {
+            loadLeaderboard(homeLeaderboardLevel);
+          }
+        }, [screen, homeLeaderboardOpen, homeLeaderboardLevel]);
+
+        React.useEffect(() => {
           function handleResize() {
             if (screen === "game" && queue[currentIdx]) {
               drawImageToCanvas(queue[currentIdx]);
@@ -1529,6 +1562,65 @@
                     ends on 2 total mistakes.
                   </div>
                 </button>
+              </div>
+
+              <div className="leaderboard-card">
+                <div className="leaderboard-header">
+                  <h3>Leaderboard</h3>
+                  <div className="leaderboard-toggle">
+                    <button
+                      className="action-button neutral small"
+                      onClick={() =>
+                        setHomeLeaderboardOpen((prev) => !prev)
+                      }
+                      aria-label="Toggle leaderboard"
+                    >
+                      {homeLeaderboardOpen ? "Hide" : "View"}
+                    </button>
+                  </div>
+                </div>
+                {homeLeaderboardOpen ? (
+                  <>
+                    <div className="level-toggle">
+                      {Object.keys(LEVELS).map((levelKey) => (
+                        <button
+                          key={levelKey}
+                          className={
+                            `level-pill ${
+                              homeLeaderboardLevel === levelKey ? "active" : ""
+                            }`
+                          }
+                          onClick={() => setHomeLeaderboardLevel(levelKey)}
+                          aria-label={`Show ${LEVELS[levelKey].name} leaderboard`}
+                        >
+                          {LEVELS[levelKey].name}
+                        </button>
+                      ))}
+                    </div>
+                    <div className="leaderboard-table">
+                      <div className="leaderboard-row header">
+                        <span>#</span>
+                        <span>Name</span>
+                        <span>Score</span>
+                      </div>
+                      {leaderboard.length === 0 ? (
+                        <div className="hint-text">{leaderboardStatus}</div>
+                      ) : (
+                        leaderboard.map((entry, index) => (
+                          <div key={index} className="leaderboard-row">
+                            <span>{index + 1}</span>
+                            <span>{entry.name || "Player"}</span>
+                            <span>{entry.score ?? "-"}</span>
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  </>
+                ) : (
+                  <div className="hint-text">
+                    View top scores from each level.
+                  </div>
+                )}
               </div>
 
               <div className="fact-box">
