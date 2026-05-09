@@ -962,6 +962,7 @@
         const dragRef = React.useRef({ active: false, startX: 0, currentX: 0 });
         const flipRef = React.useRef(false);
         const imageLoadIdRef = React.useRef(0);
+        const imageFailRef = React.useRef(0);
 
         const isHard = currentLevel === "hard";
         const showDots = !isHard || currentIdx < HARD_BASE_ROUND;
@@ -1165,6 +1166,12 @@
 
           const img = new Image();
           img.onload = () => {
+            if (!img.width || !img.height) {
+              if (typeof onLoaded === "function") {
+                onLoaded(false);
+              }
+              return;
+            }
             const scale = Math.max(
               rect.width / img.width,
               rect.height / img.height
@@ -1222,12 +1229,12 @@
 
             // Only fake images get subtle pixelation; real images stay sharp.
             if (typeof onLoaded === "function") {
-              onLoaded();
+              onLoaded(true);
             }
           };
           img.onerror = () => {
             if (typeof onLoaded === "function") {
-              onLoaded();
+              onLoaded(false);
             }
           };
           img.src = item.url;
@@ -1262,8 +1269,25 @@
           setPlayerName("");
           setSubmitted(false);
           setSubmitStatus("");
+          imageFailRef.current = 0;
           totalTimeRef.current = LEVELS[level].time;
           setScreen("game");
+        }
+
+        function handleImageFailure(item) {
+          imageFailRef.current += 1;
+          if (imageFailRef.current > 3) {
+            imageFailRef.current = 0;
+            answer("timeout");
+            return;
+          }
+          const pool = item.real ? REAL_IMAGES : FAKE_IMAGES;
+          const replacement = pool[Math.floor(Math.random() * pool.length)];
+          setQueue((prev) => {
+            const next = prev.slice();
+            next[currentIdx] = { ...replacement, real: item.real };
+            return next;
+          });
         }
 
         function endGame() {
@@ -1439,10 +1463,15 @@
           const item = queue[currentIdx];
           imageLoadIdRef.current += 1;
           const loadId = imageLoadIdRef.current;
-          drawImageToCanvas(item, () => {
+          drawImageToCanvas(item, (loaded) => {
             if (imageLoadIdRef.current !== loadId) {
               return;
             }
+            if (!loaded) {
+              handleImageFailure(item);
+              return;
+            }
+            imageFailRef.current = 0;
             startTimer();
           });
         }, [screen, currentIdx, queue, currentLevel]);
